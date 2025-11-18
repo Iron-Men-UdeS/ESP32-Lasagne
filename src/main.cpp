@@ -1,18 +1,44 @@
 #include <Arduino.h>
-
-// put function declarations here:
-int myFunction(int, int);
-
+#include "BluetoothLasa.h"
+#include "sPrint.h"
 void setup() {
-  // put your setup code here, to run once:
-  int result = myFunction(2, 3);
+// Serial.begin(115200);
+//   void setupBluetooth();
+//   Serial.println("Robot Lasagne prêt (client).");
+//   void connexionBluetooth();
+// }
+
+ Serial.begin(115200);
+
+  if (!SerialBT.begin("RobotB_CLIENT", true)) {
+    Serial.println("Erreur client!");
+    while (1);
+  }
+
+  Serial.println("Robot B → Connexion à Robot A...");
+  while (!SerialBT.connect("ESP32_Garfield")) {
+    Serial.println("Tentative...");
+    delay(1000);
+  }
+  Serial.println("Robot B connecté.");
 }
+
 
 void loop() {
-  // put your main code here, to run repeatedly:
+  positionEtEtat MonEtat = { 1.0f, 0.5f, 0, false }; // Exemple d'état de la lasagne à envoyer
+ 
+  // Réception
+  etat etatGarfield;
+  
+  if (recoieEtat(etatGarfield)) {
+   Serial.print("État reçue : ");
+    Serial.print(etatGarfield.etatJeu);
+    Serial.print(", ");
+    Serial.print(etatGarfield.GelerAutreRobot);
+    envoieEtat(MonEtat);
+    Serial.println("\nLasagne enyoyé position à Garfield.");
+  }
+   testBluetooth();
+   
 }
 
-// put function definitions here:
-int myFunction(int x, int y) {
-  return x + y;
-}
