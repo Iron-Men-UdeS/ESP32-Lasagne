@@ -9,18 +9,21 @@ void setup() {
 // }
 
  Serial.begin(115200);
+ setupBluetooth();
+ connexionBluetooth();
 
-  if (!SerialBT.begin("RobotB_CLIENT", true)) {
-    Serial.println("Erreur client!");
-    while (1);
-  }
+  // if (!SerialBT.begin("RobotB_CLIENT", true)) {
+  //   Serial.println("Erreur client!");
+  //   while (1);
+  // }
 
-  Serial.println("Robot B → Connexion à Robot A...");
-  while (!SerialBT.connect("ESP32_Garfield")) {
-    Serial.println("Tentative...");
-    delay(1000);
-  }
-  Serial.println("Robot B connecté.");
+  // Serial.println("Robot B → Connexion à Robot A...");
+  // while (!SerialBT.connect("ESP32_Garfield")) {
+  //   Serial.println("Tentative...");
+  //   delay(1000);
+  // }
+  // Serial.println("Robot B connecté.");
+
 }
 
 
@@ -31,12 +34,14 @@ void loop() {
   etat etatGarfield;
   
   if (recoieEtat(etatGarfield)) {
-   Serial.print("État reçue : ");
-    Serial.print(etatGarfield.etatJeu);
-    Serial.print(", ");
-    Serial.print(etatGarfield.GelerAutreRobot);
+    printEtat(etatGarfield);
+  //  Serial.print("État reçue : ");
+  //   Serial.print(etatGarfield.etatJeu);
+  //   Serial.print(", ");
+  //   Serial.print(etatGarfield.GelerAutreRobot);
     envoieEtat(MonEtat);
     Serial.println("\nLasagne enyoyé position à Garfield.");
+
   }
    testBluetooth();
    

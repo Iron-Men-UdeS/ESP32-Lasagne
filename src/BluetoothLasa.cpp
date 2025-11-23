@@ -19,17 +19,22 @@ bool recoieEtat(etat &pos) {
 
 void setupBluetooth() // Initialisation du Bluetooth
 {
-  SerialBT.begin("ESP32_Lasagne"); // Nom du périphérique Bluetooth
+  if (!SerialBT.begin("RobotB_CLIENT", true)) {
+    Serial.println("Erreur client!");
+    while (1);
+  }
 }
 
 void connexionBluetooth() // Connexion au périphérique Bluetooth "ESP32_Garfield"
 {
-  //Serial.println("Robot lasagne → Connexion à Robot Garfield...");
+  Serial.println("Robot B → Connexion à Robot A...");
   while (!SerialBT.connect("ESP32_Garfield")) {
-    //Serial.println("Tentative...");
-    delay(2000);
+    Serial.println("Tentative...");
+    delay(1000);
   }
+  Serial.println("Robot B connecté.");
 }
+
 
 void testBluetooth() // Test de la connexion Bluetooth
 {
@@ -39,3 +44,11 @@ void testBluetooth() // Test de la connexion Bluetooth
   
   }
 }
+
+
+
+
+
+
+  
+
