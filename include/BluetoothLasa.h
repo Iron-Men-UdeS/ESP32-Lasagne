@@ -5,20 +5,22 @@
 
 extern BluetoothSerial SerialBT;
 
-struct positionEtEtat {
+struct sPositionEtEtat {
   float x;
   float y;
   int etatJeu;
   bool GelerAutreRobot;
 };
 
-struct etat {
+struct sEtat {
   int etatJeu;
   bool GelerAutreRobot;
 };
 
-void envoieEtat(const positionEtEtat &pos);
-bool recoieEtat(etat &pos);
+bool recoieEtat(uint8_t *tab);
+void envoieEtat(uint8_t *tab);
+void envoieEtatStruct(const sPositionEtEtat &pos);
+bool recoieEtatStruct(sEtat &pos);
 void setupBluetooth();
 void testBluetooth();
 void connexionBluetooth();

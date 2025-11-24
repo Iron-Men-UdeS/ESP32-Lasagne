@@ -8,11 +8,11 @@ BluetoothSerial SerialBT;
  * 
  * Envoie la position et l'état du robot sous forme de structure via Bluetooth
  *
- * @param positionEtEtat (structure) structure contenant la position (x,y) et l'état du robot
+ * @param sPositionEtEtat (structure) structure contenant la position (x,y) et l'état du robot
  ******************************************************************************************/
 
-void envoieEtat(const positionEtEtat &pos) { // Prend la reférence d'une structure Position en paramètre
-  SerialBT.write((uint8_t*)&pos, sizeof(positionEtEtat)); 
+void envoieEtatStruct(const sPositionEtEtat &pos) { // Prend la reférence d'une structure Position en paramètre
+  SerialBT.write((uint8_t*)&pos, sizeof(sPositionEtEtat)); 
 }
 
 /*******************************************************************************************
@@ -20,11 +20,11 @@ void envoieEtat(const positionEtEtat &pos) { // Prend la reférence d'une struct
  * 
  * Lit la position et l'état du robot sous forme de structure via Bluetooth et la copie dans la structure passée en paramètre
  *
- * @param Etat (structure) structure contenant l'état du robot
+ * @param sEtat (structure) structure contenant l'état du robot
  ******************************************************************************************/
-bool recoieEtat(etat &pos) {
-  if (SerialBT.available() >= sizeof(etat)) {
-    SerialBT.readBytes((uint8_t*)&pos, sizeof(etat));
+bool recoieEtatStruct(sEtat &pos) {
+  if (SerialBT.available() >= sizeof(sEtat)) {
+    SerialBT.readBytes((uint8_t*)&pos, sizeof(sEtat));
     return true;
   }
   return false;
@@ -74,7 +74,33 @@ void testBluetooth() // Test de la connexion Bluetooth
 }
 
 
+/*******************************************************************************************
+ * Auteur : Vincent
+ * 
+ * Envoie la position et l'état du robot sous forme de tableau via Bluetooth
+ *
+ * @param tab tableau contenant la position (x,y) et l'état du robot
+ ******************************************************************************************/
 
+void envoieEtat(uint8_t *tab) { // Prend la reférence d'une structure Position en paramètre
+  SerialBT.write(tab, sizeof(tab)); 
+}
+
+
+/*******************************************************************************************
+ * Auteur : Vincent
+ * 
+ * Lit la position et l'état du robot sous forme de tableau via Bluetooth
+ *
+ * @param tab tableau dans lequel la position et l'état du robot seront copiés
+ ******************************************************************************************/
+bool recoieEtat(uint8_t *tab) {
+  if (SerialBT.available() >= sizeof(tab)) {
+    SerialBT.readBytes(tab, sizeof(tab));
+    return true;
+  }
+  return false;
+}
 
 
 
