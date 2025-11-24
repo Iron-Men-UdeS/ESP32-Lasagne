@@ -1,6 +1,12 @@
 #include "BluetoothLasa.h"
 #include "sPrint.h"
 
+/*******************************************************************************************
+ * Auteur : Vincent
+ * 
+ * Imprime la position et l'état reçue
+ ******************************************************************************************/
+
 void printPosition (positionEtEtat printPos){ // Imprime la position reçue
     Serial.print("Position reçue : ");
     Serial.print(printPos.x);
@@ -12,6 +18,12 @@ void printPosition (positionEtEtat printPos){ // Imprime la position reçue
     Serial.print(printPos.GelerAutreRobot);
 }
 
+
+/*******************************************************************************************
+ * Auteur : Vincent
+ * 
+ * Imprime la l'état reçu
+ ******************************************************************************************/
 void printEtat (etat printEtat){ // Imprime l'état reçu
     Serial.print("État reçu : ");
     Serial.print(printEtat.etatJeu);
