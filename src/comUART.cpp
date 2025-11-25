@@ -14,12 +14,12 @@ void litUART(uint8_t *trame, uint8_t sizeTrame)
     uint8_t temporaire[sizeTrame - 1];
     int i;
 
-    if (Serial.available() >= sizeTrame)
+    if (Serial2.available() >= sizeTrame)
     {
-        Serial.readBytes(temporaire, 1);
+        Serial2.readBytes(temporaire, 1);
         if (temporaire[0] == 0x24)
         {
-            Serial.readBytes(temporaire, sizeTrame - 1);
+            Serial2.readBytes(temporaire, sizeTrame - 1);
             for (i = 0; i < sizeTrame - 2; i++)
             {
                 somme = somme + temporaire[i];
@@ -42,17 +42,18 @@ void litUART(uint8_t *trame, uint8_t sizeTrame)
  * Envoie une trame sur le port UART
  *
  * @param trame (Tableau uint8_t) Trame a evoyer
+ * @param sizeTrame (uint8_t) longueur de la trame a envoyer
  ******************************************************************************************/
-void envoieTrame(uint8_t *trame)
+void envoieTrame(uint8_t *trame , uint8_t sizeTrame)
 {
     uint8_t somme;
-    for(int i = 0; i < (sizeof(trame)); i++)
+    for(int i = 0; i < sizeTrame; i++)
     {
         somme = somme + trame[i];
     }
-    Serial.write(0x24);
-    Serial.write(trame, sizeof(trame));
-    Serial.write(somme);
+    Serial2.write(0x24);
+    Serial2.write(trame, sizeTrame);
+    Serial2.write(somme);
 }
 
 
@@ -65,5 +66,5 @@ void envoieTrame(uint8_t *trame)
  ******************************************************************************************/
 void initUART1(void)
 {
-    Serial.begin(115200);
+    Serial2.begin(115200);
 }
